@@ -42,7 +42,7 @@ function calculate() {
     document.getElementById("worst-case").innerHTML = `${worstCase}`;
     document.getElementById("best-case").innerHTML = `${bestCase}`;
     document.getElementById("average-case").innerHTML = `${averageCase}`;
-    document.getElementById("time-periods-tested").innerHTML = `${2021 - 1926 - lengthOfInvestment}`;
+    document.getElementById("starting-years-tested").innerHTML = `${2021 - 1926 - lengthOfInvestment}`;
 
     invalidateGraph(results, principal, shouldAdjustForInflation);
 }

@@ -12,9 +12,9 @@
         * {
             font-family: sans-serif;
         }
-        body {
+        body, html {
+            height: 100%;
             margin: 0;
-            max-height: 100vw;
         }
         label {
             text-align: right;
@@ -54,8 +54,14 @@
             -moz-columns: 2 385px;
             columns: 2 385px;
         }
-
-
+        #parent {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        #graph {
+            flex-grow: 1;
+        }
     </style>
     <body>
         <section id="parent">
@@ -111,8 +117,8 @@
                         <p id="average-case"></p>
                     </li>
                     <li>
-                        <label for="time-periods-tested">Time periods tested:</label>
-                        <p id="time-periods-tested"></p>
+                        <label for="starting-years-tested"># of starting years tested:</label>
+                        <p id="starting-years-tested"></p>
                     </li>
                 </ul>
             </section>
