@@ -13,7 +13,7 @@ function calculate() {
     const annualInvestment = Number(document.getElementById("annual-investment").value);
     const initialInvestment = Number(document.getElementById("initial-investment").value);
     const expenseRatio = Number(document.getElementById("expense-ratio").value);
-    const lengthOfInvestment = Number(document.getElementById("length-of-investment").value) + 1;
+    const lengthOfInvestment = Number(document.getElementById("length-of-investment").value);
     const taxRate = Number(document.getElementById("tax-rate").value);
     const shouldAdjustForInflation = Boolean(document.getElementById("adjust-for-inflation").checked);
 
@@ -56,14 +56,14 @@ function getEndingBalance(
     taxRate,
     shouldAdjustForInflation
 ) {
-    let balance = 0.0;
-    let principal = 0.0;
+    let balance = initialInvestment;
+    let principal = initialInvestment;
     let totalFees = 0.0;
 
     for (let i = 0; i < lengthOfInvestment; i++) {
-        balance += balance * annualData[startingYear + i].stockReturns;
-        balance += annualInvestment;
         principal += annualInvestment;
+        balance += annualInvestment;
+        balance += balance * annualData[startingYear + i].stockReturns;
 
         const fees = balance * (expenseRatio / 100.0);
         totalFees += fees;
@@ -87,4 +87,3 @@ function getEndingBalance(
         fees: totalFees,
     };
 }
-

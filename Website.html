@@ -14,10 +14,11 @@
         }
         body {
             margin: 0;
+            max-height: 100vw;
         }
         label {
             text-align: right;
-            width: 50vw;
+            width: 50%;
         }
         label, input, p {
             margin: 2px;
@@ -28,8 +29,9 @@
             padding: 10px 0px;
             margin: 0px;
         }
-        #input {
-            background-color: #ddd;
+        #input, #results {
+            display: inline-block;
+            width: 100%;
         }
         input {
             border: none;
@@ -46,65 +48,78 @@
         li {
             padding: 2px 0px;
         }
+        #container {
+            background-color: #E1F5FE;
+            -webkit-columns: 2 385px;
+            -moz-columns: 2 385px;
+            columns: 2 385px;
+        }
+
+
     </style>
     <body>
-        <p id="instructions">
-            This tool tests how annual investments into the SP500 would have performed at different starting years.
-        </p>
-        <ul id="input">
-            <h2>Input</h2>
-            <li>
-                <label for="initial-investment">Initial investment:</label>
-                <input type="number" id="initial-investment" name="initial-investment" oninput="calculate()">
-            </li>
-            <li>
-                <label for="annual-investment">Annual investment:</label>
-                <input type="number" id="annual-investment" name="annual-investment" oninput="calculate()">
-            </li>
-            <li>
-                <label for="length-of-investment">Length of investment (years):</label>
-                <input type="number" id="length-of-investment" name="length-of-investment" oninput="calculate()">
-            </li>
-            <li>
-                <label for="expense-ratio">Expense ratio:</label>
-                <input type="number" id="expense-ratio" name="expense-ratio" oninput="calculate()">
-            </li>
-            <li>
-                <label for="tax-rate">Tax rate (%):</label>
-                <input type="number" id="tax-rate" name="tax-rate" oninput="calculate()">
-            </li>
-            <li>
-                <label for="adjust-for-inflation">Adjust results for inflation:</label>
-                <input type="checkbox" id="adjust-for-inflation" name="adjust-for-inflation" checked oninput="calculate()">
-            </li>
-        </ul>
-
-        <ul id="results">
-            <h2>Results</h2>
-            <li>
-                <label for="principal">Your principal was:</label>
-                <p id="principal"></p>
-            </li>
-            <li>
-                <label for="worst-case">Worst case:</label>
-                <p id="worst-case"></p>
-            </li>
-            <li>
-                <label for="best-case">Best case:</label>
-                <p id="best-case"></p>
-            </li>
-            <li>
-                <label for="average-case">Average case:</label>
-                <p id="average-case"></p>
-            </li>
-            <li>
-                <label for="time-periods-tested">Time periods tested:</label>
-                <p id="time-periods-tested"></p>
-            </li>
-        </ul>
-
-        <section id="graph">
-            <canvas id="canvas"></canvas>
+        <section id="parent">
+            <p id="instructions">
+                This tool tests how annual investments into the SP500 would have performed at different starting years.
+            </p>
+    
+            <section id="container">
+                <ul id="input">
+                    <h2>Input</h2>
+                    <li>
+                        <label for="initial-investment">Initial investment:</label>
+                        <input type="number" id="initial-investment" name="initial-investment" oninput="calculate()">
+                    </li>
+                    <li>
+                        <label for="annual-investment">Annual investment:</label>
+                        <input type="number" id="annual-investment" name="annual-investment" oninput="calculate()">
+                    </li>
+                    <li>
+                        <label for="length-of-investment">Length of investment:</label>
+                        <input type="number" id="length-of-investment" name="length-of-investment" oninput="calculate()">
+                    </li>
+                    <li>
+                        <label for="expense-ratio">Expense ratio:</label>
+                        <input type="number" id="expense-ratio" name="expense-ratio" oninput="calculate()">
+                    </li>
+                    <li>
+                        <label for="tax-rate">Tax rate (%):</label>
+                        <input type="number" id="tax-rate" name="tax-rate" oninput="calculate()">
+                    </li>
+                    <li>
+                        <label for="adjust-for-inflation">Adjust for inflation:</label>
+                        <input type="checkbox" id="adjust-for-inflation" name="adjust-for-inflation" checked oninput="calculate()">
+                    </li>
+                </ul>
+        
+                <ul id="results">
+                    <h2>Results</h2>
+                    <li>
+                        <label for="principal">Your principal was:</label>
+                        <p id="principal"></p>
+                    </li>
+                    <li>
+                        <label for="worst-case">Worst case:</label>
+                        <p id="worst-case"></p>
+                    </li>
+                    <li>
+                        <label for="best-case">Best case:</label>
+                        <p id="best-case"></p>
+                    </li>
+                    <li>
+                        <label for="average-case">Average case:</label>
+                        <p id="average-case"></p>
+                    </li>
+                    <li>
+                        <label for="time-periods-tested">Time periods tested:</label>
+                        <p id="time-periods-tested"></p>
+                    </li>
+                </ul>
+            </section>
+    
+            <section id="graph">
+                <canvas id="canvas"></canvas>
+            </section>
         </section>
     </body>
 </html>

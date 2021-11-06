@@ -28,7 +28,8 @@ const config = {
                     }
                 }
             }
-        }
+        },
+        maintainAspectRatio: false,
     }
 };
 
@@ -53,6 +54,7 @@ function invalidateGraph(results, principal, shouldAdjustForInflation) {
                     backgroundColor: "#000",
                     borderColor: "#000",
                     data: [],
+                    tension: 0.4
                 }
             );
         } else {
