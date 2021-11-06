@@ -1,7 +1,51 @@
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0
+});
+
 window.onload = function() {
     initGraph();
     calculate();
 };
+
+function calculate() {
+    const annualInvestment = Number(document.getElementById("annual-investment").value);
+    const initialInvestment = Number(document.getElementById("initial-investment").value);
+    const expenseRatio = Number(document.getElementById("expense-ratio").value);
+    const lengthOfInvestment = Number(document.getElementById("length-of-investment").value) + 1;
+    const taxRate = Number(document.getElementById("tax-rate").value);
+    const shouldAdjustForInflation = Boolean(document.getElementById("adjust-for-inflation").checked);
+
+    let endingBalances = [];
+    let results = [];
+    for (let i = 1926; i <= (2021 - lengthOfInvestment); i++) {
+        const result = getEndingBalance(
+            i,
+            annualInvestment,
+            initialInvestment,
+            expenseRatio,
+            lengthOfInvestment,
+            taxRate,
+            shouldAdjustForInflation,
+        );
+        endingBalances.push(result.endingBalance);
+        results.push(result);
+    }
+
+    const principal = initialInvestment + annualInvestment * lengthOfInvestment;
+    const worstCase = formatter.format(Math.min(...endingBalances));
+    const bestCase = formatter.format(Math.max(...endingBalances));
+    const averageCase = formatter.format(endingBalances.reduce((xs, x) => xs + x) / endingBalances.length);
+
+    document.getElementById("principal").innerHTML = `${formatter.format(principal)}`;
+    document.getElementById("worst-case").innerHTML = `${worstCase}`;
+    document.getElementById("best-case").innerHTML = `${bestCase}`;
+    document.getElementById("average-case").innerHTML = `${averageCase}`;
+    document.getElementById("time-periods-tested").innerHTML = `${2021 - 1926 - lengthOfInvestment}`;
+
+    invalidateGraph(results, principal, shouldAdjustForInflation);
+}
 
 function getEndingBalance(
     startingYear,
@@ -44,48 +88,3 @@ function getEndingBalance(
     };
 }
 
-const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
-});
-
-
-
-function calculate() {
-    const annualInvestment = Number(document.getElementById("annual-investment").value);
-    const initialInvestment = Number(document.getElementById("initial-investment").value);
-    const expenseRatio = Number(document.getElementById("expense-ratio").value);
-    const lengthOfInvestment = Number(document.getElementById("length-of-investment").value);
-    const taxRate = Number(document.getElementById("tax-rate").value);
-    const shouldAdjustForInflation = Boolean(document.getElementById("adjust-for-inflation").checked);
-
-    let endingBalances = [];
-    for (let i = 1926; i <= (2021 - lengthOfInvestment); i++) {
-        const result = getEndingBalance(
-            i,
-            annualInvestment,
-            initialInvestment,
-            expenseRatio,
-            lengthOfInvestment,
-            taxRate,
-            shouldAdjustForInflation,
-        );
-        endingBalances.push(result.endingBalance);
-    }
-
-    const principal = formatter.format(initialInvestment + annualInvestment * lengthOfInvestment);
-    const worstCase = formatter.format(Math.min(...endingBalances));
-    const bestCase = formatter.format(Math.max(...endingBalances));
-    const averageCase = formatter.format(endingBalances.reduce((xs, x) => xs + x) / endingBalances.length);
-
-    document.getElementById("principal").innerHTML = `${principal}`;
-    document.getElementById("worst-case").innerHTML = `${worstCase}`;
-    document.getElementById("best-case").innerHTML = `${bestCase}`;
-    document.getElementById("average-case").innerHTML = `${averageCase}`;
-    document.getElementById("time-periods-tested").innerHTML = `${2021 - 1926 - lengthOfInvestment}`;
-
-    invalidateGraph();
-}
-
-// "Main"

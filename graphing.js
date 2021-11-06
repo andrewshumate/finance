@@ -1,62 +1,33 @@
 const config = {
     type: 'line',
     data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
-            label: "My First dataset",
-            backgroundColor: "#f00",
-            borderColor: "#0f0",
-            data: [
-                7,
-                3,
-                7,
-            ],
-            fill: false,
+            label: "Ending balance",
+            backgroundColor: "#2196F3",
+            borderColor: "#2196F3",
+            tension: 0.4
         }, {
-            label: "My Second dataset",
-            fill: false,
-            backgroundColor: "#00f",
-            borderColor: "#ff0",
-            data: [
-                1,
-                2,
-                3,
-                4
-            ],
+            label: "Principal",
+            order: 999,
+            fill: true,
+            backgroundColor: "#BDBDBD",
+            borderColor: "#BDBDBD",
+            radius: 0,
         }]
     },
     options: {
-        responsive: true,
-        title: {
-            display: true,
-            text: 'Chart.js Line Chart'
-        },
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-        },
-        hover: {
-            mode: 'nearest',
-            intersect: true
-        },
         animation: {
             duration: 0
         },
         scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Month'
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value, index, values) {
+                        return formatter.format(value);
+                    }
                 }
-            }],
-            yAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Value'
-                }
-            }]
+            }
         }
     }
 };
@@ -68,12 +39,38 @@ function initGraph() {
     chart = new Chart(context, config);
 }
 
-function invalidateGraph() {
-    config.data.labels.push(Math.floor(Math.random() * 10));
+function invalidateGraph(results, principal, shouldAdjustForInflation) {
+    config.data.labels = [];
+    config.data.datasets[0].data = [];
+    config.data.datasets[1].data = [];
 
-    config.data.datasets.forEach(function(dataset) {
-        dataset.data.push(Math.floor(Math.random() * 69));
-    });
+    if (shouldAdjustForInflation) {
+        if (config.data.datasets[2] == null) {
+            config.data.datasets.push(
+                {
+                    label: "Inflation adjusted principal",
+                    fill: false,
+                    backgroundColor: "#000",
+                    borderColor: "#000",
+                    data: [],
+                }
+            );
+        } else {
+            config.data.datasets[2].data = [];
+        }
+    } else if (config.data.datasets[2] != null) {
+        config.data.datasets.pop();
+    }
+    
+    for (let i = 0; i < results.length; i++) {
+        config.data.labels.push(results[i].startingYear);
+
+        config.data.datasets[0].data.push(results[i].endingBalance);
+        config.data.datasets[1].data.push(principal);
+        if (shouldAdjustForInflation) {
+            config.data.datasets[2].data.push(results[i].principal);
+        }
+    }
 
     chart.update();
 }

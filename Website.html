@@ -15,22 +15,18 @@
         body {
             margin: 0;
         }
-        #left-column {
-            float: left;
-            margin-right: 10px;
-        }
         label {
             text-align: right;
             width: 50vw;
         }
         label, input, p {
-            padding: 9px 0px;
             margin: 2px;
             display: inline-block;
         }
         ul {
             list-style: none;
             padding: 10px 0px;
+            margin: 0px;
         }
         #input {
             background-color: #ddd;
@@ -41,11 +37,20 @@
         }
         h2 {
             text-align: center;
-            padding: 0px;
+            padding: 0px 0px 4px 0px;
             margin: 0px;
+        }
+        #instructions, #graph {
+            padding: 1em;
+        }
+        li {
+            padding: 2px 0px;
         }
     </style>
     <body>
+        <p id="instructions">
+            This tool tests how annual investments into the SP500 would have performed at different starting years.
+        </p>
         <ul id="input">
             <h2>Input</h2>
             <li>
