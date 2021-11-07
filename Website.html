@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Investment calculator</title>
     </head>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
@@ -9,6 +10,9 @@
     <script src="scripts.js"></script>
     <script src="graphing.js"></script>
     <style>
+        :root {
+            --horizontal-padding: 1em;
+        }
         * {
             font-family: sans-serif;
         }
@@ -26,16 +30,17 @@
         }
         ul {
             list-style: none;
-            padding: 10px 0px;
+            padding: 10px var(--horizontal-padding);
             margin: 0px;
         }
         #input, #results {
             display: inline-block;
-            width: 100%;
+            width: calc(100% - 2 * var(--horizontal-padding));
         }
         input {
             border: none;
             padding: 8px;
+            max-width: 9em;
         }
         h2 {
             text-align: center;
@@ -54,14 +59,22 @@
             -moz-columns: 2 385px;
             columns: 2 385px;
         }
-        #parent {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+        @media screen and (min-width: 1024px) {
+            #parent {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            #graph {
+                flex-grow: 1;
+            } 
         }
-        #graph {
-            flex-grow: 1;
+        @media screen and (max-width: 1023px) {
+            #graph {
+                height: 500px;
+            } 
         }
+
     </style>
     <body>
         <section id="parent">
