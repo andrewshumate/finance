@@ -63,7 +63,7 @@ function invalidateGraph(results, principal, shouldAdjustForInflation) {
     } else if (config.data.datasets[2] != null) {
         config.data.datasets.pop();
     }
-    
+
     for (let i = 0; i < results.length; i++) {
         config.data.labels.push(results[i].startingYear);
 

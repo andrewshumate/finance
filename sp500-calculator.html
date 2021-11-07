@@ -66,14 +66,14 @@
                 }
                 #graph {
                     flex-grow: 1;
-                } 
+                }
             }
             @media screen and (max-width: 1023px) {
                 #graph {
                     height: 500px;
-                } 
+                }
             }
-    
+
         </style>
     </head>
     <body>
@@ -81,7 +81,7 @@
             <p id="instructions">
                 This tool tests how annual investments into the SP500 would have performed at different starting years.
             </p>
-    
+
             <section id="container">
                 <ul id="input">
                     <h2>Input</h2>
@@ -110,7 +110,7 @@
                         <input type="checkbox" id="adjust-for-inflation" name="adjust-for-inflation" checked oninput="calculate()">
                     </li>
                 </ul>
-        
+
                 <ul id="results">
                     <h2>Results</h2>
                     <li>
@@ -135,7 +135,7 @@
                     </li>
                 </ul>
             </section>
-    
+
             <section id="graph">
                 <canvas id="canvas"></canvas>
             </section>
