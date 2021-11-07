@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Investment calculator</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
         <script src="data.js"></script>
@@ -15,7 +15,8 @@
             * {
                 font-family: sans-serif;
             }
-            body, html {
+            body,
+            html {
                 height: 100%;
                 margin: 0;
             }
@@ -23,7 +24,9 @@
                 text-align: right;
                 width: 50%;
             }
-            label, input, p {
+            label,
+            input,
+            p {
                 margin: 2px;
                 display: inline-block;
             }
@@ -32,7 +35,8 @@
                 padding: 10px var(--horizontal-padding);
                 margin: 0px;
             }
-            #input, #results {
+            #input,
+            #results {
                 display: inline-block;
                 width: calc(100% - 2 * var(--horizontal-padding));
             }
@@ -46,14 +50,15 @@
                 padding: 0px 0px 4px 0px;
                 margin: 0px;
             }
-            #instructions, #graph {
+            #instructions,
+            #graph {
                 padding: 1em;
             }
             li {
                 padding: 2px 0px;
             }
             #container {
-                background-color: #E1F5FE;
+                background-color: #e1f5fe;
                 -webkit-columns: 2 385px;
                 -moz-columns: 2 385px;
                 columns: 2 385px;
@@ -73,41 +78,38 @@
                     height: 500px;
                 }
             }
-
         </style>
     </head>
     <body>
         <section id="parent">
-            <p id="instructions">
-                This tool tests how annual investments into the SP500 would have performed at different starting years.
-            </p>
+            <p id="instructions">This tool tests how annual investments into the SP500 would have performed at different starting years.</p>
 
             <section id="container">
                 <ul id="input">
                     <h2>Input</h2>
                     <li>
                         <label for="initial-investment">Initial investment:</label>
-                        <input type="number" id="initial-investment" name="initial-investment" oninput="calculate()">
+                        <input type="number" id="initial-investment" name="initial-investment" oninput="calculate()" />
                     </li>
                     <li>
                         <label for="annual-investment">Annual investment:</label>
-                        <input type="number" id="annual-investment" name="annual-investment" oninput="calculate()">
+                        <input type="number" id="annual-investment" name="annual-investment" oninput="calculate()" />
                     </li>
                     <li>
                         <label for="length-of-investment">Length of investment:</label>
-                        <input type="number" min=0 id="length-of-investment" name="length-of-investment" oninput="calculate()">
+                        <input type="number" min="0" id="length-of-investment" name="length-of-investment" oninput="calculate()" />
                     </li>
                     <li>
                         <label for="expense-ratio">Expense ratio:</label>
-                        <input type="number" min=0 step=0.1 id="expense-ratio" name="expense-ratio" oninput="calculate()">
+                        <input type="number" min="0" step="0.1" id="expense-ratio" name="expense-ratio" oninput="calculate()" />
                     </li>
                     <li>
                         <label for="tax-rate">Tax rate (%):</label>
-                        <input type="number" min=0 id="tax-rate" name="tax-rate" oninput="calculate()">
+                        <input type="number" min="0" id="tax-rate" name="tax-rate" oninput="calculate()" />
                     </li>
                     <li>
                         <label for="adjust-for-inflation">Adjust for inflation:</label>
-                        <input type="checkbox" id="adjust-for-inflation" name="adjust-for-inflation" checked oninput="calculate()">
+                        <input type="checkbox" id="adjust-for-inflation" name="adjust-for-inflation" checked oninput="calculate()" />
                     </li>
                 </ul>
 

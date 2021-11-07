@@ -1,10 +1,10 @@
-const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
+const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
 });
 
-window.onload = function() {
+window.onload = function () {
     initGraph();
     calculate();
 };
@@ -19,7 +19,7 @@ function calculate() {
 
     let endingBalances = [];
     let results = [];
-    for (let i = 1926; i <= (2021 - lengthOfInvestment); i++) {
+    for (let i = 1926; i <= 2021 - lengthOfInvestment; i++) {
         const result = getEndingBalance(
             i,
             annualInvestment,
@@ -27,7 +27,7 @@ function calculate() {
             expenseRatio,
             lengthOfInvestment,
             taxRate,
-            shouldAdjustForInflation,
+            shouldAdjustForInflation
         );
         endingBalances.push(result.endingBalance);
         results.push(result);

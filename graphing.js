@@ -1,36 +1,39 @@
 const config = {
-    type: 'line',
+    type: "line",
     data: {
-        datasets: [{
-            label: "Ending balance",
-            backgroundColor: "#2196F3",
-            borderColor: "#2196F3",
-            tension: 0.4
-        }, {
-            label: "Principal",
-            order: 999,
-            fill: true,
-            backgroundColor: "#BDBDBD",
-            borderColor: "#BDBDBD",
-            radius: 0,
-        }]
+        datasets: [
+            {
+                label: "Ending balance",
+                backgroundColor: "#2196F3",
+                borderColor: "#2196F3",
+                tension: 0.4,
+            },
+            {
+                label: "Principal",
+                order: 999,
+                fill: true,
+                backgroundColor: "#BDBDBD",
+                borderColor: "#BDBDBD",
+                radius: 0,
+            },
+        ],
     },
     options: {
         animation: {
-            duration: 0
+            duration: 0,
         },
         scales: {
             y: {
                 beginAtZero: true,
                 ticks: {
-                    callback: function(value, index, values) {
+                    callback: function (value, index, values) {
                         return formatter.format(value);
-                    }
-                }
-            }
+                    },
+                },
+            },
         },
         maintainAspectRatio: false,
-    }
+    },
 };
 
 let chart;
@@ -47,16 +50,14 @@ function invalidateGraph(results, principal, shouldAdjustForInflation) {
 
     if (shouldAdjustForInflation) {
         if (config.data.datasets[2] == null) {
-            config.data.datasets.push(
-                {
-                    label: "Inflation adjusted principal",
-                    fill: false,
-                    backgroundColor: "#000",
-                    borderColor: "#000",
-                    data: [],
-                    tension: 0.4
-                }
-            );
+            config.data.datasets.push({
+                label: "Inflation adjusted principal",
+                fill: false,
+                backgroundColor: "#000",
+                borderColor: "#000",
+                data: [],
+                tension: 0.4,
+            });
         } else {
             config.data.datasets[2].data = [];
         }
