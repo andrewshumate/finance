@@ -4,78 +4,78 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Investment calculator</title>
-    </head>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
-    <script src="data.js"></script>
-    <script src="scripts.js"></script>
-    <script src="graphing.js"></script>
-    <style>
-        :root {
-            --horizontal-padding: 1em;
-        }
-        * {
-            font-family: sans-serif;
-        }
-        body, html {
-            height: 100%;
-            margin: 0;
-        }
-        label {
-            text-align: right;
-            width: 50%;
-        }
-        label, input, p {
-            margin: 2px;
-            display: inline-block;
-        }
-        ul {
-            list-style: none;
-            padding: 10px var(--horizontal-padding);
-            margin: 0px;
-        }
-        #input, #results {
-            display: inline-block;
-            width: calc(100% - 2 * var(--horizontal-padding));
-        }
-        input {
-            border: none;
-            padding: 8px;
-            max-width: 9em;
-        }
-        h2 {
-            text-align: center;
-            padding: 0px 0px 4px 0px;
-            margin: 0px;
-        }
-        #instructions, #graph {
-            padding: 1em;
-        }
-        li {
-            padding: 2px 0px;
-        }
-        #container {
-            background-color: #E1F5FE;
-            -webkit-columns: 2 385px;
-            -moz-columns: 2 385px;
-            columns: 2 385px;
-        }
-        @media screen and (min-width: 1024px) {
-            #parent {
-                display: flex;
-                flex-direction: column;
-                height: 100%;
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+        <script src="data.js"></script>
+        <script src="scripts.js"></script>
+        <script src="graphing.js"></script>
+        <style>
+            :root {
+                --horizontal-padding: 1em;
             }
-            #graph {
-                flex-grow: 1;
-            } 
-        }
-        @media screen and (max-width: 1023px) {
-            #graph {
-                height: 500px;
-            } 
-        }
-
-    </style>
+            * {
+                font-family: sans-serif;
+            }
+            body, html {
+                height: 100%;
+                margin: 0;
+            }
+            label {
+                text-align: right;
+                width: 50%;
+            }
+            label, input, p {
+                margin: 2px;
+                display: inline-block;
+            }
+            ul {
+                list-style: none;
+                padding: 10px var(--horizontal-padding);
+                margin: 0px;
+            }
+            #input, #results {
+                display: inline-block;
+                width: calc(100% - 2 * var(--horizontal-padding));
+            }
+            input {
+                border: none;
+                padding: 8px;
+                max-width: 9em;
+            }
+            h2 {
+                text-align: center;
+                padding: 0px 0px 4px 0px;
+                margin: 0px;
+            }
+            #instructions, #graph {
+                padding: 1em;
+            }
+            li {
+                padding: 2px 0px;
+            }
+            #container {
+                background-color: #E1F5FE;
+                -webkit-columns: 2 385px;
+                -moz-columns: 2 385px;
+                columns: 2 385px;
+            }
+            @media screen and (min-width: 1024px) {
+                #parent {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                }
+                #graph {
+                    flex-grow: 1;
+                } 
+            }
+            @media screen and (max-width: 1023px) {
+                #graph {
+                    height: 500px;
+                } 
+            }
+    
+        </style>
+    </head>
     <body>
         <section id="parent">
             <p id="instructions">
