@@ -36,15 +36,17 @@
                 padding: 10px var(--horizontal-padding);
                 margin: 0px;
             }
+            #input {
+                display: inline-block;
+            }
             #input,
             #results {
-                display: inline-block;
                 width: calc(100% - 2 * var(--horizontal-padding));
             }
-            input {
+            input[type=number] {
                 border: none;
                 padding: 8px;
-                max-width: 9em;
+                width: 9em;
             }
             h2 {
                 text-align: center;
