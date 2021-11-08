@@ -5,17 +5,22 @@ const formatter = new Intl.NumberFormat("en-US", {
 });
 
 window.onload = function () {
+    const isChecked = localStorage.getItem("adjust-for-inflation");
+    if (isChecked != null) {
+        document.getElementById("adjust-for-inflation").checked = isChecked === "true";
+    }
+
     initGraph();
     calculate();
 };
 
 function calculate() {
-    const annualInvestment = Number(document.getElementById("annual-investment").value);
-    const initialInvestment = Number(document.getElementById("initial-investment").value);
-    const expenseRatio = Number(document.getElementById("expense-ratio").value);
-    const lengthOfInvestment = Number(document.getElementById("length-of-investment").value);
-    const taxRate = Number(document.getElementById("tax-rate").value);
-    const shouldAdjustForInflation = Boolean(document.getElementById("adjust-for-inflation").checked);
+    const annualInvestment = getAndSaveNumber("annual-investment");
+    const initialInvestment = getAndSaveNumber("initial-investment");
+    const expenseRatio = getAndSaveNumber("expense-ratio");
+    const lengthOfInvestment = getAndSaveNumber("length-of-investment");
+    const taxRate = getAndSaveNumber("tax-rate");
+    const shouldAdjustForInflation = getAndSaveBoolean("adjust-for-inflation");
 
     let endingBalances = [];
     let results = [];
