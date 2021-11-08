@@ -11,7 +11,6 @@ const config = {
             {
                 label: "Principal",
                 order: 999,
-                fill: true,
                 backgroundColor: "#BDBDBD",
                 borderColor: "#BDBDBD",
                 radius: 0,
