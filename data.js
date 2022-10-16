@@ -96,6 +96,6 @@ const annualData = {
     2018: { stockReturns: -0.0438, inflationRate: 0.0244 },
     2019: { stockReturns: 0.3149, inflationRate: 0.0181 },
     2020: { stockReturns: 0.184, inflationRate: 0.0124 },
-    2021: { stockReturns: 0.2871, inflationRate: 0.0470 },
-    2022: { stockReturns: -0.1731, inflationRate: 0.08146 },  // So far
+    2021: { stockReturns: 0.2871, inflationRate: 0.047 },
+    2022: { stockReturns: -0.1731, inflationRate: 0.08146 }, // So far
 };

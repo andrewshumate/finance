@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>UPRO calculator</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+        <script src="upro/data2.js"></script>
+        <script src="data.js"></script>
+        <script src="storage.js"></script>
+        <script src="./upro/scripts2.js"></script>
+        <script src="graphing.js"></script>
+        <style>
+            :root {
+                --horizontal-padding: 1em;
+            }
+            * {
+                font-family: sans-serif;
+            }
+            body,
+            html {
+                height: 100%;
+                margin: 0;
+            }
+            label {
+                text-align: right;
+                width: 50%;
+            }
+            label,
+            input,
+            p {
+                margin: 2px;
+                display: inline-block;
+            }
+            ul {
+                list-style: none;
+                padding: 10px var(--horizontal-padding);
+                margin: 0px;
+            }
+            #input {
+                display: inline-block;
+            }
+            #input,
+            #results {
+                width: calc(100% - 2 * var(--horizontal-padding));
+            }
+            input[type=number] {
+                border: none;
+                padding: 8px;
+                width: 9em;
+            }
+            h2 {
+                text-align: center;
+                padding: 0px 0px 4px 0px;
+                margin: 0px;
+            }
+            #instructions,
+            #graph {
+                padding: 1em;
+            }
+            li {
+                padding: 2px 0px;
+            }
+            #container {
+                background-color: #e1f5fe;
+                -webkit-columns: 2 385px;
+                -moz-columns: 2 385px;
+                columns: 2 385px;
+            }
+            @media screen and (min-width: 1024px) {
+                #parent {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                }
+                #graph {
+                    flex-grow: 1;
+                }
+            }
+            @media screen and (max-width: 1023px) {
+                #graph {
+                    height: 500px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <section id="parent">
+            <p id="instructions">This tool tests how annual investments into UPRO would have performed at different starting years. (No dividends)</p>
+
+            <section id="container">
+                <ul id="input">
+                    <h2>Input</h2>
+                    <li>
+                        <label for="initial-investment">Initial investment:</label>
+                        <input type="number" id="initial-investment" name="initial-investment" oninput="calculate()" />
+                    </li>
+                    <li>
+                        <label for="annual-investment">Annual investment:</label>
+                        <input type="number" id="annual-investment" name="annual-investment" oninput="calculate()" />
+                    </li>
+                    <li>
+                        <label for="length-of-investment">Length of investment:</label>
+                        <input type="number" min="0" max="95" id="length-of-investment" name="length-of-investment" oninput="calculate()" />
+                    </li>
+                    <li>
+                        <label for="expense-ratio">Expense ratio:</label>
+                        <input type="number" min="0" step="0.1" id="expense-ratio" name="expense-ratio" oninput="calculate()" />
+                    </li>
+                    <li>
+                        <label for="tax-rate">Tax rate (%):</label>
+                        <input type="number" min="0" id="tax-rate" name="tax-rate" oninput="calculate()" />
+                    </li>
+                    <li>
+                        <label for="adjust-for-inflation">Adjust for inflation:</label>
+                        <input type="checkbox" id="adjust-for-inflation" name="adjust-for-inflation" checked oninput="calculate()" />
+                    </li>
+                </ul>
+
+                <ul id="results">
+                    <h2>Results</h2>
+                    <li>
+                        <label for="principal">Your principal was:</label>
+                        <p id="principal"></p>
+                    </li>
+                    <li>
+                        <label for="worst-case">Worst case:</label>
+                        <p id="worst-case"></p>
+                    </li>
+                    <li>
+                        <label for="best-case">Best case:</label>
+                        <p id="best-case"></p>
+                    </li>
+                    <li>
+                        <label for="average-case">Average case:</label>
+                        <p id="average-case"></p>
+                    </li>
+                    <li>
+                        <label for="starting-years-tested"># of starting years tested:</label>
+                        <p id="starting-years-tested"></p>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="graph">
+                <canvas id="canvas"></canvas>
+            </section>
+        </section>
+    </body>
+</html>
