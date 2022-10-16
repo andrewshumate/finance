@@ -107,7 +107,13 @@ const DAILY_DATE_TO_PERCENT_CHANGE_MAP = (function () {
         previousClosingPrice = closingPrice;
     }
 
-    return [...dateToPercentChangeMap];
+    const abc = [...dateToPercentChangeMap];
+    const result = {};
+    for (let i = 1926; i < 2022; i++) {
+        const x = abc.filter((entry) => i === entry[0].getYear() + 1900);
+        result[i] = x;
+    }
+    return result;
 })();
 
 // With leverage
@@ -116,9 +122,7 @@ let previousCostOfLeverage = null;
 let cache = null;
 function getAnnualPercentChange(leverage, costOfLeverage) {
     function getAnnualPercentChange_(year) {
-        const thisYearsDailyPercentChanges = DAILY_DATE_TO_PERCENT_CHANGE_MAP.filter(
-            (entry) => year === entry[0].getYear() + 1900
-        );
+        const thisYearsDailyPercentChanges = DAILY_DATE_TO_PERCENT_CHANGE_MAP[year];
 
         let balance = 100.0;
         for (let i = 0; i < thisYearsDailyPercentChanges.length; i++) {
