@@ -4,6 +4,7 @@ const defaultValues = {
     "expense-ratio": 0.12,
     "length-of-investment": 35,
     "tax-rate": 0.0,
+    leverage: 3.0,
 };
 
 function getAndSaveNumber(key) {

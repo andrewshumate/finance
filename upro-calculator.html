@@ -104,8 +104,12 @@
                         <input type="number" min="0" max="95" id="length-of-investment" name="length-of-investment" oninput="calculate()" />
                     </li>
                     <li>
-                        <label for="expense-ratio">Expense ratio:</label>
+                        <label for="expense-ratio">Cost of leverage:</label>
                         <input type="number" min="0" step="0.1" id="expense-ratio" name="expense-ratio" oninput="calculate()" />
+                    </li>
+                    <li>
+                        <label for="leverage">Leverage:</label>
+                        <input type="number" min="0" step="0.1" id="leverage" name="leverage" oninput="calculate()" />
                     </li>
                     <li>
                         <label for="tax-rate">Tax rate (%):</label>
@@ -132,7 +136,7 @@
                         <p id="best-case"></p>
                     </li>
                     <li>
-                        <label for="average-case">Average case:</label>
+                        <label for="average-case">Median case:</label>
                         <p id="average-case"></p>
                     </li>
                     <li>

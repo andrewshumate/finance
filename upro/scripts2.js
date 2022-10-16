@@ -17,10 +17,11 @@ window.onload = function () {
 function calculate() {
     const annualInvestment = getAndSaveNumber("annual-investment");
     const initialInvestment = getAndSaveNumber("initial-investment");
-    const expenseRatio = getAndSaveNumber("expense-ratio");
+    const costOfLeverage = getAndSaveNumber("expense-ratio");
     const lengthOfInvestment = getAndSaveNumber("length-of-investment");
     const taxRate = getAndSaveNumber("tax-rate");
     const shouldAdjustForInflation = getAndSaveBoolean("adjust-for-inflation");
+    const leverage = getAndSaveNumber("leverage");
 
     let endingBalances = [];
     let results = [];
@@ -29,10 +30,11 @@ function calculate() {
             i,
             annualInvestment,
             initialInvestment,
-            expenseRatio,
+            costOfLeverage,
             lengthOfInvestment,
             taxRate,
-            shouldAdjustForInflation
+            shouldAdjustForInflation,
+            leverage
         );
         endingBalances.push(result.endingBalance);
         results.push(result);
@@ -41,12 +43,12 @@ function calculate() {
     const principal = initialInvestment + annualInvestment * lengthOfInvestment;
     const worstCase = formatter.format(Math.min(...endingBalances));
     const bestCase = formatter.format(Math.max(...endingBalances));
-    const averageCase = formatter.format(endingBalances.reduce((xs, x) => xs + x) / endingBalances.length);
+    const medianCase = formatter.format(endingBalances.sort((a, b) => a - b)[Math.floor(endingBalances.length / 2)]);
 
     document.getElementById("principal").innerHTML = `${formatter.format(principal)}`;
     document.getElementById("worst-case").innerHTML = `${worstCase}`;
     document.getElementById("best-case").innerHTML = `${bestCase}`;
-    document.getElementById("average-case").innerHTML = `${averageCase}`;
+    document.getElementById("average-case").innerHTML = `${medianCase}`;
     document.getElementById("starting-years-tested").innerHTML = `${2021 - 1926 - lengthOfInvestment}`;
 
     invalidateGraph(results, principal, shouldAdjustForInflation);
@@ -56,10 +58,11 @@ function getEndingBalance(
     startingYear,
     annualInvestment,
     initialInvestment,
-    expenseRatio,
+    costOfLeverage,
     lengthOfInvestment,
     taxRate,
-    shouldAdjustForInflation
+    shouldAdjustForInflation,
+    leverage
 ) {
     let balance = initialInvestment;
     let principal = initialInvestment;
@@ -68,11 +71,7 @@ function getEndingBalance(
     for (let i = 0; i < lengthOfInvestment; i++) {
         principal += annualInvestment;
         balance += annualInvestment;
-        balance += balance * ANNUAL_DATE_TO_PERCENT_CHANGE_MAP[startingYear + i];
-
-        const fees = balance * (expenseRatio / 100.0);
-        totalFees += fees;
-        balance -= fees;
+        balance += balance * getAnnualPercentChange(leverage, costOfLeverage / 100)[startingYear + i];
 
         if (shouldAdjustForInflation) {
             balance *= 1 - annualData[startingYear + i].inflationRate;
@@ -112,22 +111,20 @@ const DAILY_DATE_TO_PERCENT_CHANGE_MAP = (function () {
 })();
 
 // With leverage
-const ANNUAL_DATE_TO_PERCENT_CHANGE_MAP = (function () {
-    function getAnnualPercentChange(year) {
+let previousLeverage = null;
+let previousCostOfLeverage = null;
+let cache = null;
+function getAnnualPercentChange(leverage, costOfLeverage) {
+    function getAnnualPercentChange_(year) {
         const thisYearsDailyPercentChanges = DAILY_DATE_TO_PERCENT_CHANGE_MAP.filter(
             (entry) => year === entry[0].getYear() + 1900
         );
 
-        // https://old.reddit.com/r/LETFs/comments/tsrtgn
-        // https://old.reddit.com/r/LETFs/comments/sdg7ma
-        const LEVERAGE = 2;
-        const COST_OF_LEVERAGE = LEVERAGE / 50;
-
         let balance = 100.0;
         for (let i = 0; i < thisYearsDailyPercentChanges.length; i++) {
             let thisDaysPercentChange = thisYearsDailyPercentChanges[i][1];
-            thisDaysPercentChange *= LEVERAGE;
-            thisDaysPercentChange -= COST_OF_LEVERAGE / thisYearsDailyPercentChanges.length;
+            thisDaysPercentChange *= leverage;
+            thisDaysPercentChange -= costOfLeverage / thisYearsDailyPercentChanges.length;
             balance += balance * thisDaysPercentChange;
         }
 
@@ -136,10 +133,19 @@ const ANNUAL_DATE_TO_PERCENT_CHANGE_MAP = (function () {
         return result;
     }
 
+    if (cache != null && previousLeverage === leverage && previousCostOfLeverage === costOfLeverage) {
+        return cache;
+    }
+
     const result = {};
     for (let i = 1926; i < 2022; i++) {
-        const x = getAnnualPercentChange(i);
+        const x = getAnnualPercentChange_(i);
         result[i] = x;
     }
+
+    cache = result;
+    previousLeverage = leverage;
+    previousCostOfLeverage = costOfLeverage;
+
     return result;
-})();
+}
