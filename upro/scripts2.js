@@ -71,7 +71,7 @@ function getEndingBalance(
     for (let i = 0; i < lengthOfInvestment; i++) {
         principal += annualInvestment;
         balance += annualInvestment;
-        balance += balance * getAnnualPercentChange(leverage, costOfLeverage / 100)[startingYear + i];
+        balance += balance * getAnnualPercentChange(startingYear + i, leverage, costOfLeverage / 100);
 
         if (shouldAdjustForInflation) {
             balance *= 1 - annualData[startingYear + i].inflationRate;
@@ -90,6 +90,43 @@ function getEndingBalance(
         taxes: taxes,
         fees: totalFees,
     };
+}
+
+// With leverage
+let previousLeverage = null;
+let previousCostOfLeverage = null;
+let cache = null;
+function getAnnualPercentChange(year, leverage, costOfLeverage) {
+    function _getAnnualPercentChange(_year) {
+        const thisYearsDailyPercentChanges = DAILY_DATE_TO_PERCENT_CHANGE_MAP[_year];
+
+        let balance = 100.0;
+        for (let i = 0; i < thisYearsDailyPercentChanges.length; i++) {
+            let thisDaysPercentChange = thisYearsDailyPercentChanges[i][1];
+            thisDaysPercentChange *= leverage;
+            thisDaysPercentChange -= costOfLeverage / thisYearsDailyPercentChanges.length;
+            balance += balance * thisDaysPercentChange;
+        }
+
+        const result = (balance - 100.0) / 100.0;
+        return result;
+    }
+
+    if (cache != null && previousLeverage === leverage && previousCostOfLeverage === costOfLeverage) {
+        return cache[year];
+    } else {
+        const result = {};
+        for (let i = 1926; i < 2022; i++) {
+            const x = _getAnnualPercentChange(i);
+            result[i] = x;
+        }
+
+        cache = result;
+        previousLeverage = leverage;
+        previousCostOfLeverage = costOfLeverage;
+
+        return result[year];
+    }
 }
 
 // Without leverage
@@ -115,41 +152,3 @@ const DAILY_DATE_TO_PERCENT_CHANGE_MAP = (function () {
     }
     return result;
 })();
-
-// With leverage
-let previousLeverage = null;
-let previousCostOfLeverage = null;
-let cache = null;
-function getAnnualPercentChange(leverage, costOfLeverage) {
-    function getAnnualPercentChange_(year) {
-        const thisYearsDailyPercentChanges = DAILY_DATE_TO_PERCENT_CHANGE_MAP[year];
-
-        let balance = 100.0;
-        for (let i = 0; i < thisYearsDailyPercentChanges.length; i++) {
-            let thisDaysPercentChange = thisYearsDailyPercentChanges[i][1];
-            thisDaysPercentChange *= leverage;
-            thisDaysPercentChange -= costOfLeverage / thisYearsDailyPercentChanges.length;
-            balance += balance * thisDaysPercentChange;
-        }
-
-        const result = (balance - 100.0) / 100.0;
-        // console.log(`${year} had an annual return of ${(result * 100).toFixed(2)}%`);
-        return result;
-    }
-
-    if (cache != null && previousLeverage === leverage && previousCostOfLeverage === costOfLeverage) {
-        return cache;
-    }
-
-    const result = {};
-    for (let i = 1926; i < 2022; i++) {
-        const x = getAnnualPercentChange_(i);
-        result[i] = x;
-    }
-
-    cache = result;
-    previousLeverage = leverage;
-    previousCostOfLeverage = costOfLeverage;
-
-    return result;
-}
