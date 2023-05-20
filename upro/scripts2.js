@@ -15,6 +15,8 @@ window.onload = function () {
 };
 
 function calculate() {
+    const start = new Date().getTime();
+
     const annualInvestment = getAndSaveNumber("annual-investment");
     const initialInvestment = getAndSaveNumber("initial-investment");
     const costOfLeverage = getAndSaveNumber("expense-ratio");
@@ -52,6 +54,9 @@ function calculate() {
     document.getElementById("starting-years-tested").innerHTML = `${2021 - 1926 - lengthOfInvestment}`;
 
     invalidateGraph(results, principal, shouldAdjustForInflation);
+
+    const end = new Date().getTime();
+    console.log(`That took ${end - start} ms!`);
 }
 
 function getEndingBalance(
@@ -115,17 +120,17 @@ function getAnnualPercentChange(year, leverage, costOfLeverage) {
     if (cache != null && previousLeverage === leverage && previousCostOfLeverage === costOfLeverage) {
         return cache[year];
     } else {
-        const result = {};
+        const result = new Map();
         for (let i = 1926; i < 2022; i++) {
             const x = _getAnnualPercentChange(i);
-            result[i] = x;
+            result.set(i, x);
         }
 
         cache = result;
         previousLeverage = leverage;
         previousCostOfLeverage = costOfLeverage;
 
-        return result[year];
+        return result.get(year);
     }
 }
 
