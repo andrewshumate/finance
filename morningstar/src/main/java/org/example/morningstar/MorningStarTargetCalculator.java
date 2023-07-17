@@ -5,6 +5,9 @@ import org.apache.commons.math3.linear.RealMatrix;
 
 import java.util.Arrays;
 
+/*
+ * Source: https://chat.openai.com/share/b04a6272-b9ef-47ab-8cb4-fd0df182c027
+ */
 public class MorningStarTargetCalculator {
     private static final int[][][] INPUT_BOXES = InputBoxes.US;
     private static final int[][] TARGET_BOX = TargetBoxes.US_AVGE;
